@@ -14,7 +14,6 @@ import com.example.exception.ClientErrorException;
 import java.util.Optional;
 import java.util.List;
 
-
 @Service
 @Transactional
 public class MessageService {
@@ -27,9 +26,12 @@ public class MessageService {
 
     /**
      * Creates a new message.
+     * 
      * @param message the message to be created.
-     * @return new message if text is acceptable and message creation was successful.
-     * @throws ClientErrorException if creation failed because of inappropriate text or account not existing.
+     * @return new message if text is acceptable and message creation was
+     *         successful.
+     * @throws ClientErrorException if creation failed because of inappropriate text
+     *                              or account not existing.
      */
     public Message createMessage(Message message) {
         // Account check
@@ -43,13 +45,14 @@ public class MessageService {
         throw new ClientErrorException();
     }
 
-
     /**
      * Updates message.
-     * @param id the ID of the message.
+     * 
+     * @param id   the ID of the message.
      * @param text the new message text.
      * @return updated message if new text is acceptable and update was successful.
-     * @throws ClientErrorException if update failed because of inappropriate text or message not existing.
+     * @throws ClientErrorException if update failed because of inappropriate text
+     *                              or message not existing.
      */
     public Message updateMessage(Integer id, String text) {
         Message toUpdate = getMessageByID(id);
@@ -66,6 +69,7 @@ public class MessageService {
 
     /**
      * Deletes message by ID.
+     * 
      * @param id the ID of the message.
      * @return deleted message if deletion was successful.
      */
@@ -82,6 +86,7 @@ public class MessageService {
 
     /**
      * Retrieves all messages.
+     * 
      * @return list with all messages.
      */
     public List<Message> getAllMessages() {
@@ -90,6 +95,7 @@ public class MessageService {
 
     /**
      * Retrieves message by ID.
+     * 
      * @param id the ID of the message.
      * @return message if message ID was found.
      */
@@ -99,11 +105,12 @@ public class MessageService {
             return message.get();
         }
 
-        return null;    
+        return null;
     }
 
     /**
      * Retrieves all messages from account.
+     * 
      * @param id the ID of the account.
      * @return messages if account ID was found.
      */

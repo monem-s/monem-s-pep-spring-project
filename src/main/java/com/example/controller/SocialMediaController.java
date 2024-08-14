@@ -42,58 +42,34 @@ public class SocialMediaController {
 
     /**
      * Handler to register a new account.
+     * 
      * @param account the account to be registered.
      */
     @PostMapping(value = "/register")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-        // Duplicate username check
-        //Account dupCheck = accountService.getAccountByUsername(account.getUsername());
-        //if (dupCheck != null) {
-        //    ResponseEntity.status(409).body(null); // 409
-        //}
-
-        // Check username and password
-        //if (account.getUsername().length() < 1 || account.getPassword().length() < 4) {
-        //    return ResponseEntity.status(404).body(null); // 404
-        //}
-
         return ResponseEntity.status(200).body(accountService.createAccount(account));
-
     }
 
     /**
      * Handler to login a account.
+     * 
      * @param account the account to be logged in.
      */
     @PostMapping(value = "/login")
     public ResponseEntity<Account> loginAccount(@RequestBody Account account) {
         Account toLogin = accountService.loginAccount(account);
-
-        //if (toLogin != null) {
         return ResponseEntity.status(200).body(toLogin);
-        //}
-
-        //return ResponseEntity.status(401).body(null); // 401
     }
 
     /**
      * Handler to post a new message.
+     * 
      * @param message the message to be posted.
      */
     @PostMapping(value = "/messages")
     public ResponseEntity<Message> createMessage(@RequestBody Message message) {
-        // Account check
-        //if (accountService.getAccountById(message.getPostedBy()) != null) {
-        //    
         Message newMessage = messageService.createMessage(message);
-
-        // Check success of message creation
-        //    if (newMessage != null) {
         return ResponseEntity.status(200).body(newMessage);
-        //    }
-        //}
-
-        //return ResponseEntity.status(400).body(null); // 400
     }
 
     /**
@@ -106,6 +82,7 @@ public class SocialMediaController {
 
     /**
      * Handler to retrieve message by ID.
+     * 
      * @param messageId the ID of the message to be retrieved.
      */
     @GetMapping(value = "/messages/{messageId}")
@@ -115,6 +92,7 @@ public class SocialMediaController {
 
     /**
      * Handler to delete message by ID.
+     * 
      * @param messageId the ID of the message to be deleted.
      */
     @DeleteMapping(value = "/messages/{messageId}")
@@ -124,25 +102,20 @@ public class SocialMediaController {
 
     /**
      * Handler to update message by ID.
+     * 
      * @param messageId the ID of the message to be deleted.
-     * @param json the json which contains the new message text.
+     * @param json      the json which contains the new message text.
      */
     @PatchMapping(value = "/messages/{messageId}")
     public ResponseEntity<Long> updateMessage(@PathVariable Integer messageId,
             @RequestBody HashMap<String, String> json) {
-        //Message updatedMessage = 
         messageService.updateMessage(messageId, json.get("messageText"));
-
-        // Check success
-        //if (updatedMessage != null && updatedMessage.getMessageText() == json.get("messageText")) {
         return ResponseEntity.status(200).body(Long.valueOf(1));
-        //}
-
-        //return ResponseEntity.status(400).body(null); // 400
     }
 
     /**
      * Handler to retrieve all messages from a user.
+     * 
      * @param messageId the ID of the user from which messages are being retrieved.
      */
     @GetMapping(value = "/accounts/{accountId}/messages")
@@ -155,36 +128,44 @@ public class SocialMediaController {
     /**
      * Exception Handler which sends 404 in response to runtime errors.
      * Example taken from lecture "HTTP Status Code and Exception Handling"
+     * 
      * @param ex the runtime exception.
      */
-    @ExceptionHandler({RuntimeException.class})
+    @ExceptionHandler({ RuntimeException.class })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public @ResponseBody String handleNotFound(RuntimeException ex) {
         return ex.getMessage();
     }
 
     /**
-     * Exception Handler which sends 409 in response to duplicate user error during registration.
+     * Exception Handler which sends 409 in response to duplicate user error during
+     * registration.
+     * 
      * @param ex the duplicate user exception.
      */
-    @ExceptionHandler({DuplicateUserException.class})
+    @ExceptionHandler({ DuplicateUserException.class })
     @ResponseStatus(HttpStatus.CONFLICT)
-    public @ResponseBody void handleDuplicateUserSignup(DuplicateUserException ex) {}
+    public @ResponseBody void handleDuplicateUserSignup(DuplicateUserException ex) {
+    }
 
     /**
      * Exception Handler which sends 401 in response to unauthorized access error.
-     * @param ex the client error.
+     * 
+     * @param ex the unauthorized error.
      */
-    @ExceptionHandler({UnauthorizedException.class})
+    @ExceptionHandler({ UnauthorizedException.class })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public @ResponseBody void handleUnauthorizedError(UnauthorizedException ex) {}
+    public @ResponseBody void handleUnauthorizedError(UnauthorizedException ex) {
+    }
 
     /**
      * Exception Handler which sends 400 in response to client errors.
+     * 
      * @param ex the client error.
      */
-    @ExceptionHandler({ClientErrorException.class})
+    @ExceptionHandler({ ClientErrorException.class })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody void handleClientError(ClientErrorException ex) {}
+    public @ResponseBody void handleClientError(ClientErrorException ex) {
+    }
 
 }
